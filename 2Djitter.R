@@ -31,8 +31,9 @@ jitter2D <- function (x, y, factor = 1, amount = NULL)   {
     amount_x <- f(x)
     amount_y <- f(y)
   }
-  ratios <- stats::runif(length(x), 0, 1)
+  directions <- stats::runif(length(x), 0, pi*2)
+  amounts <- stats::runif(length(x))
   return(cbind(
-    x + ratios * stats::runif(length(x), -amount_x, amount_x),
-    y + (1-ratios) * stats::runif(length(x), -amount_y, amount_y)))
+    x + cos(directions) * amount_x * amounts,
+    y + sin(directions) * amount_y * amounts))
 }
