@@ -1,5 +1,4 @@
-jitter2D <- function (x, y, factor = 1, amount = NULL) 
-{
+jitter2D <- function (x, y, factor = 1, amount = NULL)   {
   if (length(x) == 0L)
     return(x)
   if (!is.numeric(x))
@@ -14,21 +13,24 @@ jitter2D <- function (x, y, factor = 1, amount = NULL)
       z <- abs(r[1L])
     if (z == 0)
       z <- 1
-    if (is.null(amount)) {
-      d <- diff(xx <- unique(sort.int(round(x, 3 - floor(log10(z))))))
-      d <- if (length(d))
-        min(d)
-      else if (xx != 0)
-        xx/10
-      else z/10
-      amount <- factor/5 * abs(d)
-    }
-    else if (amount == 0)
-      amount <- factor * (z/50)
+    d <- diff(xx <- unique(sort.int(round(x, 3 - floor(log10(z))))))
+    d <- if (length(d))
+      min(d)
+    else if (xx != 0)
+      xx/10
+    else z/10
+    amount <- factor/5 * abs(d)
     return(amount)
   }
-  amount_x <- f(x)
-  amount_y <- f(y)
+  if (length(amount)==2L) {
+    amount_x <- amount[1]
+    amount_y <- amount[2]
+  } else if (length(amount) == 1L) {
+    amount_x <- amount_y <- amount
+  } else {
+    amount_x <- f(x)
+    amount_y <- f(y)
+  }
   ratios <- stats::runif(length(x), 0, 1)
   return(cbind(
     x + ratios * stats::runif(length(x), -amount_x, amount_x),
