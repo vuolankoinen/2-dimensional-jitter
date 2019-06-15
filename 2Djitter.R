@@ -22,18 +22,18 @@ jitter2D <- function (x, y, factor = 1, amount = NULL)   {
     amount <- factor/5 * abs(d)
     return(amount)
   }
-  if (length(amount)==2L) {
-    amount_x <- amount[1]
-    amount_y <- amount[2]
+  if (length(amount) == 2L) {
+    amount_x <- amount[1L]
+    amount_y <- amount[2L]
   } else if (length(amount) == 1L) {
-    amount_x <- amount_y <- amount
+    amount.x <- amount.y <- amount
   } else {
-    amount_x <- f(x)
-    amount_y <- f(y)
+    amount.x <- f(x)
+    amount.y <- f(y)
   }
-  directions <- stats::runif(length(x), 0, pi*2)
+  directions <- stats::runif(length(x), 0, pi * 2)
   amounts <- stats::runif(length(x))
   return(cbind(
-    x + cos(directions) * amount_x * amounts,
-    y + sin(directions) * amount_y * amounts))
+    x + cos(directions) * amount.x * amounts,
+    y + sin(directions) * amount.y * amounts))
 }
